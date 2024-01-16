@@ -4,6 +4,15 @@ import { UserService } from 'src/app/services/user.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-list-users',
@@ -18,7 +27,7 @@ export class ListUsersComponent {
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
     this.userService.getUsers().subscribe((data: User[]) => {
       this.users = data;
       this.dataSource = new MatTableDataSource<User>(this.users);
@@ -32,5 +41,14 @@ export class ListUsersComponent {
 
   goToUpdateUser(id: number) {
     this.router.navigate(['/update-user/'+id])
+  }
+
+  openDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DeleteDialogComponent, {
+      width: '250px',
+      data: { id },
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }
