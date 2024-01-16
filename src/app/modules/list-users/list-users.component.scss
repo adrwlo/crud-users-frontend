@@ -1,0 +1,17 @@
+.addButtonWrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.tableWrapper {
+    padding: 50px;
+}
+table {
+    width: 100%;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
