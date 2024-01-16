@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class AddUserComponent {
   userForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(private fb: FormBuilder, private userService: UserService, private matSnackBar: MatSnackBar, private router: Router) {
     this.initializeForm();
   }
 
@@ -26,6 +28,18 @@ export class AddUserComponent {
 
   addUser() {
     console.log(this.userForm.value);
-    this.userService.addUser(this.userForm.value).subscribe();
+    this.userService.addUser(this.userForm.value).subscribe(() => console.log('added user!'));
+    this.openSnackBar('test', 'tets');
+    setTimeout(() => {
+      this.goToListUsers();
+    }, 1200);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.matSnackBar.open(message, action, {duration: 1000});
+  }
+
+  goToListUsers() {
+    this.router.navigate(['/list-users']);
   }
 }

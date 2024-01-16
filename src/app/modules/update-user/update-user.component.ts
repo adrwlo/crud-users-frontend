@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-user',
@@ -11,10 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UpdateUserComponent implements OnInit {
   userForm!: FormGroup;
-  userToUpdate!: User;
   id!: number;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private userService: UserService, private activatedRoute: ActivatedRoute, private router: Router, private matSnackBar: MatSnackBar) {
     this.initializeForm();
   }
 
@@ -25,12 +25,20 @@ export class UpdateUserComponent implements OnInit {
     });
 
     this.userService.getUserById(this.id).subscribe((data: User) => {
-      this.userToUpdate = data;
+      this.userForm.patchValue({
+        id: data.id,
+        name: data.name,
+        surname: data.surname,
+        age: data.age,
+        number: data.number,
+        email: data.email,
+      });
     })
   }
 
   initializeForm() {
     this.userForm = this.fb.group({
+      id: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(0)]],
@@ -41,16 +49,17 @@ export class UpdateUserComponent implements OnInit {
 
   updateUser() {
     this.userService.updateUser(this.userForm.value).subscribe();
+    this.openSnackBar("test", "test2");
+    setTimeout(() => {
+      this.goToListUsers();
+    }, 1200);
   }
 
+  openSnackBar(message: string, action: string) {
+    this.matSnackBar.open(message, action, {duration: 1000});
+  }
 
-  // initializeForm() {
-  //   this.userForm = this.fb.group({
-  //     name: [this.userToUpdate.name, Validators.required],
-  //     surname: [this.userToUpdate.surname, Validators.required],
-  //     age: [this.userToUpdate.age, [Validators.required, Validators.min(0)]],
-  //     number: [this.userToUpdate.number, Validators.required],
-  //     email: [this.userToUpdate.email, [Validators.required, Validators.email]],
-  //   });
-  // }
+  goToListUsers() {
+    this.router.navigate(['/list-users']);
+  }
 }
