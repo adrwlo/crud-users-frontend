@@ -15,8 +15,14 @@ export class DeleteDialogComponent {
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.data.id).subscribe();
-    this.dialogRef.close();
-    this.userService.getUsers().subscribe();
+    this.userService.deleteUser(this.data.id).subscribe(() => {
+      this.userService.getUsers().subscribe();
+    });
+
+    this.closeDialog(true);
+  }
+
+  closeDialog(deleted: boolean) {
+    this.dialogRef.close(deleted);
   }
 }

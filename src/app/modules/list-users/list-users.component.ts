@@ -28,6 +28,10 @@ export class ListUsersComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private userService: UserService, private router: Router, public dialog: MatDialog) {
+    this.loadUsersFromDatabase();
+  }
+
+  loadUsersFromDatabase() {
     this.userService.getUsers().subscribe((data: User[]) => {
       this.users = data;
       this.dataSource = new MatTableDataSource<User>(this.users);
@@ -44,11 +48,18 @@ export class ListUsersComponent {
   }
 
   openDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DeleteDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
       data: { id },
       enterAnimationDuration,
       exitAnimationDuration,
+    });
+
+    dialogRef.afterClosed().subscribe((deleted: boolean) => {
+      if (deleted) {
+        this.loadUsersFromDatabase();
+        this.paginator.firstPage();
+      }
     });
   }
 }
