@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { CustomValidators } from 'src/app/validators/CustomValidators';
 
 @Component({
   selector: 'app-add-user',
@@ -12,31 +13,70 @@ import { UserService } from 'src/app/services/user.service';
 export class AddUserComponent {
   userForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private matSnackBar: MatSnackBar, private router: Router) {
+  ageOptions: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private matSnackBar: MatSnackBar,
+    private router: Router
+  ) {
     this.initializeForm();
   }
 
   initializeForm() {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(0)]],
-      number: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, CustomValidators.notEmpty]],
+      surname: ['', [Validators.required, CustomValidators.notEmpty]],
+      number: ['', [Validators.required, CustomValidators.validNumber]],
+      email: ['', [Validators.required, CustomValidators.validEmail]],
+      age: [null, [Validators.required]]
+    });
+  }
+
+  getErrorMessage(controlName: string) {
+    const control = this.userForm.get(controlName);
+    if (control?.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    if (controlName === 'email' && control?.hasError('email')) {
+      return 'Not a valid email';
+    }
+
+    if (controlName === 'number' && control?.hasError('validNumber')) {
+      return 'Not a valid number phone';
+    }
+
+    return '';
+  }
+
+  checkFormErrors() {
+    Object.keys(this.userForm.controls).forEach(controlName => {
+      const control = this.userForm.get(controlName);
+      if (control?.invalid) {
+        control.markAsTouched();
+        control.markAsDirty();
+      }
     });
   }
 
   addUser() {
-    console.log(this.userForm.value);
-    this.userService.addUser(this.userForm.value).subscribe(() => console.log('added user!'));
-    this.openSnackBar('test', 'tets');
-    setTimeout(() => {
-      this.goToListUsers();
-    }, 1200);
+    this.checkFormErrors();
+    if (this.userForm.invalid) {
+      this.openSnackBar('Error', 'Not valid data');
+      return;
+    } else {
+      this.userService.addUser(this.userForm.value).subscribe(() => console.log('added user!'));
+      this.openSnackBar('Success', 'Added new user!');
+      setTimeout(() => {
+        this.goToListUsers();
+      }, 2000);
+    }
   }
 
   openSnackBar(message: string, action: string) {
-    this.matSnackBar.open(message, action, {duration: 1000});
+    this.matSnackBar.open(message, action, { duration: 2000 });
   }
 
   goToListUsers() {

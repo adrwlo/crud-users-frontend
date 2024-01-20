@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
     MatSnackBarModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
   ],
   providers: [
     {
