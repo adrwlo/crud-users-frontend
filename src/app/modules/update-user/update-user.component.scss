@@ -1,0 +1,72 @@
+.addUserWrapper {
+    width: 100%;
+    height: 100% - 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .leftSide {
+        width: 60%;
+
+        mat-card {
+            width: 800px;
+            height: auto;
+            padding: 50px;
+
+            mat-card-title {
+                margin-left: 35px;
+                margin-bottom: 20px;
+                font-size: 30px;
+            }
+
+            mat-card-content {
+                .firstRow {
+                    display: flex;
+                    gap: 30px;
+    
+                    .name {
+                        width: 300px;
+                    }
+    
+                    .surname {
+                        width: 300px;
+                    }
+                }
+    
+                .secondRow {
+                    display: flex;
+                    gap: 30px;
+    
+                    .number {
+                        width: 300px;
+                    }
+    
+                    .email {
+                        width: 300px;
+                    }
+                }
+    
+                .thirdRow {
+                    .age {
+                        //width: 300px;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .rightSide {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 600px;
+            height: auto;
+            z-index: 100;
+        }
+    }
+}

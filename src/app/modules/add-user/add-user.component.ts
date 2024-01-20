@@ -12,7 +12,6 @@ import { CustomValidators } from 'src/app/validators/CustomValidators';
 })
 export class AddUserComponent {
   userForm!: FormGroup;
-
   ageOptions: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
 
   constructor(
