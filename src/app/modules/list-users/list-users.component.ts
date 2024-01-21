@@ -11,7 +11,7 @@ import { MatSort } from '@angular/material/sort';
 export interface ListUserFilterState {
   filter: string,
   email: string,
-  age: string,
+  age: number | null,
 }
 
 @Component({
@@ -28,7 +28,7 @@ export class ListUsersComponent {
   filterState: ListUserFilterState = {
     filter: '',
     email: '',
-    age: '',
+    age: null,
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,22 +63,21 @@ export class ListUsersComponent {
 
   refresh() {
     const filterValue = this.filterState.filter.toLowerCase();
-    const ageFilter = this.filterState.age.toLowerCase();
+    const ageFilter = this.filterState.age !== null ? this.filterState.age.toString() : undefined; // Exclude null values
     const emailFilter = this.filterState.email ? this.filterState.email.toLowerCase() : '';
-
+  
     const filteredUsers = this.users.filter(x =>
       (emailFilter === '' || x.email.toLowerCase().includes(emailFilter)) &&
-      (ageFilter === '' || x.age.toString().toLowerCase() === ageFilter) &&
+      (ageFilter === undefined || x.age.toString() === ageFilter) &&
       (filterValue === '' ||
         x.name.toLowerCase().includes(filterValue) ||
         x.surname.toLowerCase().includes(filterValue)
       )
     );
-
+  
     this.dataSource = new MatTableDataSource<User>(filteredUsers);
     this.dataSource.paginator = this.paginator;
   }
-  
   
   goToAddUser() {
     this.router.navigate(['/add-user']);

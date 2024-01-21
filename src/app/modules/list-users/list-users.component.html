@@ -21,7 +21,7 @@
       <mat-select [(ngModel)]="filterState.age" (selectionChange)="refresh()">
         <mat-option *ngFor="let i of ageOptions" [value]="i">{{ i }}</mat-option>
       </mat-select>
-      <button *ngIf="filterState.age" matSuffix mat-icon-button aria-label="Clear" (click)="filterState.age=''; refresh()">
+      <button *ngIf="filterState.age" matSuffix mat-icon-button aria-label="Clear" (click)="filterState.age=null; refresh()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field> 
