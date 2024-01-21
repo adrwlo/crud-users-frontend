@@ -24,7 +24,6 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
-      console.log('ID from URL:', this.id);
     });
 
     this.userService.getUserById(this.id).subscribe((data: User) => {
@@ -99,7 +98,7 @@ export class UpdateUserComponent implements OnInit {
     } else if (!this.areFieldsChanged()) {
       this.openSnackBar('Error', 'Not data changed');
     } else {
-      this.userService.updateUser(this.userForm.value).subscribe(() => console.log('updated user!'));
+      this.userService.updateUser(this.userForm.value).subscribe();
       this.openSnackBar('Success', `Updated user with id: ${this.id}`);
       setTimeout(() => {
         this.goToListUsers();

@@ -17,7 +17,7 @@
       </button>
     </mat-form-field>
     <mat-form-field class="age">
-      <mat-label>Age</mat-label>
+      <mat-label>age</mat-label>
       <mat-select [(ngModel)]="filterState.age" (selectionChange)="refresh()">
         <mat-option *ngFor="let i of ageOptions" [value]="i">{{ i }}</mat-option>
       </mat-select>

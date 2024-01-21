@@ -66,7 +66,7 @@ export class AddUserComponent {
       this.openSnackBar('Error', 'Not valid data');
       return;
     } else {
-      this.userService.addUser(this.userForm.value).subscribe(() => console.log('added user!'));
+      this.userService.addUser(this.userForm.value).subscribe();
       this.openSnackBar('Success', 'Added new user!');
       setTimeout(() => {
         this.goToListUsers();

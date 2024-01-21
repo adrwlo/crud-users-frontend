@@ -20,7 +20,6 @@ export class SpinnerInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log('caught')
     this.totalRequests++;
     this.spinnerService.setSpinnerVisible(true);
     return next.handle(request).pipe(
