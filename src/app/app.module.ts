@@ -24,6 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatIconModule,
+    FormsModule,
   ],
   providers: [
     {
