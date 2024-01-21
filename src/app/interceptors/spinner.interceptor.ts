@@ -26,7 +26,6 @@ export class SpinnerInterceptor implements HttpInterceptor {
       finalize(() => {
         this.totalRequests--;
         if (this.totalRequests === 0) {
-          // Add a delay of at least 2 seconds using the timer function
           timer(500).pipe(
             delayWhen(async () => this.spinnerService.setSpinnerVisible(false))
           ).subscribe();
