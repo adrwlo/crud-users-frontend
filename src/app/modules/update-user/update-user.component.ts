@@ -98,7 +98,8 @@ export class UpdateUserComponent implements OnInit {
     } else if (!this.areFieldsChanged()) {
       this.openSnackBar('Error', 'Not data changed');
     } else {
-      this.userService.updateUser(this.userForm.value).subscribe();
+      const updatedUser = { ...this.userForm.value, id: this.id };
+      this.userService.updateUser(updatedUser).subscribe();
       this.openSnackBar('Success', `Updated user with id: ${this.id}`);
       setTimeout(() => {
         this.goToListUsers();
