@@ -19,13 +19,14 @@ import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteDialogComponent } from './modules/list-users/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     AddUserComponent,
     ListUsersComponent,
     NavbarComponent,
+    DeleteDialogComponent,
     SpinnerComponent,
     PhonePipe
   ],
@@ -51,11 +53,11 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatDialogModule,
     MatProgressSpinnerModule,
     MatSelectModule,
     MatIconModule,
     FormsModule,
+    MatDialogModule,
   ],
   providers: [
     {

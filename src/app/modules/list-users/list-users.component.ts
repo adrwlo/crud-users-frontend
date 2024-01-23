@@ -89,7 +89,7 @@ export class ListUsersComponent {
 
   openDialog(id: number, enterAnimationDuration: string, exitAnimationDuration: string): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: { id },
       enterAnimationDuration,
       exitAnimationDuration,

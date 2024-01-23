@@ -1,12 +1,11 @@
-<div class="deleteDialogWrapper">
+
   <h1 mat-dialog-title>Delete user</h1>
   <div mat-dialog-content>
     {{this.contentText}}
   </div>
-  <div>
-    <!-- <button mat-button mat-dialog-close>No</button>
-    <button mat-button mat-dialog-close cdkFocusInitial>Ok</button> -->
+  <div mat-dialog-actions class="mat-dialog-actions">
     <button mat-raised-button color="warn" (click)="closeDialog(true)">No</button>   
     <button mat-raised-button color="primary" (click)="deleteUser()">Delete</button>   
   </div>
-</div>
+
+
